@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My test page</title>
+    <script language="Javascript">
+      
+        function calcCTL (form) {
+        
+        var intensityFactorsq, weeklyHours, targetCtl, ctlPlateau;
+        intensityFactorsq = Math.pow(form.SportType.value,2);
+        weeklyHours = form.WeeklyHours.value;
+        if (weeklyHours == "") {alert ("Please fill in a value for weekly hours");
+          return false}
+        ctlPlateau = ((((intensityFactorsq)*weeklyHours*100)*.143)-.536);
+
+/*
+        alert ("Your CTL will plateau at approximately " + Math.round(ctlPlateau) + " if you train " + (weeklyHours) + " hours per week.");
+        */
+        document.getElementById("ctlOutput").innerHTML = Math.round(ctlPlateau)
+        document.getElementById("availableHours").innerHTML = (weeklyHours)
+
+
+}
+
+        function calcWeeklyHours (form) {
+        
+        var intensityFactorsq, weeklyHours, targetCtl, ctlPlateau;
+        intensityFactorsq = Math.pow(form.SportType.value,2);
+        weeklyHours = form.WeeklyHours.value;
+        targetCtl = form.targetCtl.value;
+        hoursNeeded = (((parseFloat(targetCtl)) + 0.536)/(.143*100*intensityFactorsq));
+       
+
+
+       /* alert ("You will need to train approximately " + 
+          Math.round(hoursNeeded) + " hours per week to hit a CTL of " 
+          + (targetCtl) +".");
+          */
+
+         document.getElementById("weeklyHoursNeededOutput").innerHTML = Math.round(hoursNeeded) 
+      
+
+
+
+}
+
+
+</script>
+  </head>
+
+  <body>
+    <h1>How much training?</h1>
+    
+    <p>Enter your sport type first. Then select the average hours you have available to train to determine your peak CTL. 
+    </p>
+<p>
+ <form name="ctlcalculator">
+  <p>
+  <input type="radio" id="Triathlete" name="SportType" value=0.75 required="">
+  <label for="Triathlete">Triathlete</label><br>
+  <input type="radio" id="Runner" name="SportType" value=0.80>
+  <label for="runner">Runner</label><br>
+  <input type="radio" id="Cyclist" name="SportType" value=0.70>
+  <label for="Cyclist">Cyclist</label>
+ </p>
+
+<p>
+  <label for="Weekly hours">Weekly Hours (between 5 and 30):</label>
+  <input type="number" id="weeklyhours" name="WeeklyHours" min="5" max="30">
+    <br>
+  <input type="submit" value="Calculate CTL" onClick="calcCTL(this.form);return false">
+    <br>
+  <br>Your CTL will Plateau at approximately <b><span id="ctlOutput"></span></b> if you train <b><span id=availableHours></span></b> hours per week.
+
+</p>
+<p>Or enter your target CTL to determine how many hours per week you will need.</p>
+<p>
+  <label for="targetctl">Target CTL (between 40 and 200):</label>
+  <input type="number" id="targetctl" name="targetCtl" min="40" max="200">
+<br>
+  <input type="submit" value="Calculate Weekly Hours" 
+  onClick="calcWeeklyHours(this.form); return false">
+    <br>
+  <br>You will need to train approximately <b><span id="weeklyHoursNeededOutput"></span></b> hours per week.
+
+</p>
+</form> 
+  </body>
+</html>
